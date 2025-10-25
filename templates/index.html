@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block content %}
+<header class="hero">
+  <div class="hero-inner">
+    <h1 class="neon">{{ profile.name }}</h1>
+    <p class="subtitle">{{ profile.title }}</p>
+    <p class="summary">{{ profile.summary }}</p>
+    <div class="cta">
+      <a class="btn" href="#projects">Ver proyectos</a>
+      <a class="btn ghost" href="{{ profile.github }}" target="_blank">GitHub</a>
+    </div>
+  </div>
+  <div class="social">
+    <a href="{{ profile.github }}" target="_blank">GitHub</a>
+    <a href="{{ profile.linkedin }}" target="_blank">LinkedIn</a>
+    <a href="mailto:{{ profile.email }}">Email</a>
+  </div>
+</header>
+
+<section id="skills" class="card-section">
+  <h2>Habilidades</h2>
+  <div class="skills">
+    {% for s in profile.skills %}
+      <span class="skill">{{ s }}</span>
+    {% endfor %}
+  </div>
+</section>
+
+<section id="projects" class="card-section">
+  <h2>Proyectos (GitHub)</h2>
+  <div class="grid">
+    {% if repos %}
+      {% for repo in repos %}
+        <article class="card">
+          <h3><a href="{{ repo.url }}" target="_blank">{{ repo.name }}</a></h3>
+          <p class="repo-desc">{{ repo.description }}</p>
+          <div class="meta">
+            <span class="lang">{{ repo.language or '—' }}</span>
+            <span class="stars">★ {{ repo.stars }}</span>
+          </div>
+        </article>
+      {% endfor %}
+    {% else %}
+      <p>No se pudieron cargar los repositorios de GitHub.</p>
+    {% endif %}
+  </div>
+</section>
+{% endblock %}
